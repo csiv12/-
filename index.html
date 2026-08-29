@@ -253,7 +253,7 @@ button{ font-family:inherit; }
   <div class="page active" id="p1">
     <div class="small">FROM ABOUD</div>
     <div class="title">بنين</div>
-    <div class="quote">"هاي مو مجرد صفحة... خليها لحظات صغيرة تستحق تتعاش بهدوء."</div>
+    <div class="quote">"هاي مو مجرد صفحة... خليها لحظات صغيرة تستحق تعيشيها بهدوء."</div>
     <button class="next" onclick="go()">نبدأ 🤍</button>
   </div>
 
@@ -270,7 +270,7 @@ button{ font-family:inherit; }
   <div class="page" id="p3">
     <div class="small">DAWN</div>
     <div class="title">وهذا الصبح؟</div>
-    <div class="quote">مثلج... كل مرة يجي، يجيب وياه شيء أجمل.</div>
+    <div class="quote">مثلج... كل مرة يجي، يجيب وياه شيء أجمل نفس بنين الحلوه.</div>
     <button class="next" onclick="go()">كمّلي</button>
   </div>
 
@@ -336,7 +336,7 @@ button{ font-family:inherit; }
   <div class="page" id="p11">
     <div class="small">LOOK UP</div>
     <div class="title">القمر اليوم أخذ مكانه...</div>
-    <div class="quote">بس أحس أكو أحد أجمل منه بالمشهد.</div>
+    <div class="quote">بس أحس أكو أحد أجمل منه بالمشهد اريدج تركزين على القمر بالمرحله الي بعدها.</div>
     <button class="next" onclick="moonMoment()">شوفيه</button>
   </div>
 
@@ -358,9 +358,9 @@ button{ font-family:inherit; }
       <div class="envelope" id="envelope"> 
         <div class="envBack"></div> 
         <div class="paper"> 
-          <strong>من عبود 🤍</strong><br><br> 
+          <strong> 🤍</strong><br><br> 
           إذا وصلتي لهنا، فمعناها عشتِ الرحلة للنهاية.<br> 
-          وأتمنى فعلًا إنها رسمت لج ابتسامة صغيرة. 
+          وأتمنى فعلًا إنها رسمت لج ابتسامة صغيرة. بس بعدنا ما كملنه
         </div> 
         <div class="flap"></div> 
         <div class="envFront"></div> 
@@ -375,7 +375,7 @@ button{ font-family:inherit; }
     <div class="small">LAST THING</div>
     <div class="finalCircle"></div>
     <div class="title" style="margin-top:18px">وهنا... وصلنا للنهاية.</div>
-    <div class="quote">بس عندي طلب أخير.</div>
+    <div class="quote">بس بنين عندي طلب أخير.</div>
     <div class="text">اقرأي هذه الرسالة بهدوء... 🤍</div>
     <button class="next" onclick="finish()">آخر لحظة</button>
   </div>
@@ -538,13 +538,31 @@ function rainEffect(){
 function audioUpdate(){
   if(!audio) return;
   const now = audio.currentTime;
-  const rainLevel = current===7 ? .16 : 0;
-  const windLevel = (current===3 || current===6 || current===8 || current===9 || current>=10) ? .035 : 0;
-  const nightLevel = (current===2 || current>=10) ? .025 : 0;
+  
+  // إذا وصلنا للمرحلة الأخيرة 15 تتوقف جميع الأصوات تماماً (0)
+  if(current === 15){
+    rainGain.gain.cancelScheduledValues(now);
+    rainGain.gain.linearRampToValueAtTime(0, now + 0.5);
+    windGain.gain.cancelScheduledValues(now);
+    windGain.gain.linearRampToValueAtTime(0, now + 0.5);
+    nightGain.gain.cancelScheduledValues(now);
+    nightGain.gain.linearRampToValueAtTime(0, now + 0.5);
+    return;
+  }
 
-  rainGain.gain.cancelScheduledValues(now); rainGain.gain.linearRampToValueAtTime(rainLevel, now+1);
-  windGain.gain.cancelScheduledValues(now); windGain.gain.linearRampToValueAtTime(windLevel, now+1);
-  nightGain.gain.cancelScheduledValues(now); nightGain.gain.linearRampToValueAtTime(nightLevel, now+1);
+  // مستويات الصوت لباقي المراحل
+  const rainLevel = (current === 7) ? .16 : 0;
+  const windLevel = (current===3 || current===6 || current===8 || current===9 || (current>=10 && current<15)) ? .035 : 0;
+  const nightLevel = (current===2 || (current>=10 && current<15)) ? .025 : 0;
+
+  rainGain.gain.cancelScheduledValues(now); 
+  rainGain.gain.linearRampToValueAtTime(rainLevel, now + 0.8);
+
+  windGain.gain.cancelScheduledValues(now); 
+  windGain.gain.linearRampToValueAtTime(windLevel, now + 1);
+
+  nightGain.gain.cancelScheduledValues(now); 
+  nightGain.gain.linearRampToValueAtTime(nightLevel, now + 1);
 }
 
 /* THEME CONTROLLER */
@@ -625,7 +643,11 @@ function go(){
   newPage.classList.add("active");
   current++;
   updateScene(current);
-  chime();
+
+  // تشغيل نغمة الانتقال فقط قبل المرحلة الأخيرة
+  if(current < 15) {
+    chime();
+  }
 
   if(current === 15){
     startTypewriter();
@@ -686,7 +708,7 @@ function startTypewriter(){
   const container = document.getElementById("typewriter-content");
   container.textContent = "";
   let i = 0;
-  const speed = 40; // سرعة الكتابة بالمللي ثانية
+  const speed = 40; 
 
   function type() {
     if (i < messageText.length) {
@@ -702,7 +724,7 @@ function startTypewriter(){
 updateScene(1);
 
 setInterval(() => {
-  if(current === 2 || current >= 10){
+  if(current === 2 || (current >= 10 && current < 15)){
     const all = document.querySelectorAll(".star");
     for(let i=0; i<9; i++){
       const star = all[Math.floor(Math.random() * all.length)];
