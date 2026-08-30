@@ -3,1545 +3,1866 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>غرفة بنين السرّية 🎀</title>
+
+<title>مهمة خاصة لبنين ✨</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500&display=swap');
+
+/* ===============================
+   GENERAL
+================================ */
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
 html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:"Segoe UI",Tahoma,Arial,sans-serif;
 }
 
 body{
-  font-family:'Cairo',sans-serif;
-  background:#f6dce5;
-  color:#604550;
+    background:#11111f;
+    color:white;
 }
 
-/* =========================
-   MAIN WORLD
-========================= */
+/* ===============================
+   SKY BACKGROUND
+================================ */
+
+#sky{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+
+    background:
+    radial-gradient(circle at 50% 20%,
+    rgba(150,100,220,.22),
+    transparent 30%),
+
+    linear-gradient(
+    180deg,
+    #10101f,
+    #18142c,
+    #291a40);
+
+    transition:2s ease;
+}
+
+/* ===============================
+   STARS
+================================ */
+
+.star{
+    position:absolute;
+
+    width:3px;
+    height:3px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+    0 0 8px white,
+    0 0 15px rgba(255,255,255,.5);
+
+    animation:twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle{
+
+    0%,100%{
+        opacity:.2;
+        transform:scale(.7);
+    }
+
+    50%{
+        opacity:1;
+        transform:scale(1.6);
+    }
+
+}
+
+/* ===============================
+   APP
+================================ */
 
 #app{
-  width:100%;
-  height:100%;
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 20% 20%,rgba(255,255,255,.8),transparent 25%),
-    radial-gradient(circle at 80% 80%,rgba(238,171,193,.35),transparent 30%),
-    linear-gradient(135deg,#f9e7ed,#f4cfdc);
+    position:relative;
+    width:100%;
+    height:100%;
+    z-index:5;
 }
 
-/* floating background */
-
-.bubble{
-  position:absolute;
-  border-radius:50%;
-  background:rgba(255,255,255,.25);
-  animation:float 8s ease-in-out infinite;
-  pointer-events:none;
-}
-
-.b1{width:90px;height:90px;top:8%;left:8%}
-.b2{width:150px;height:150px;bottom:-30px;right:-30px;animation-delay:2s}
-.b3{width:60px;height:60px;top:55%;right:10%;animation-delay:4s}
-.b4{width:110px;height:110px;bottom:12%;left:-40px;animation-delay:1s}
-
-@keyframes float{
-  0%,100%{transform:translateY(0) rotate(0deg)}
-  50%{transform:translateY(-25px) rotate(8deg)}
-}
-
-/* =========================
-   PROGRESS
-========================= */
-
-#progressWrap{
-  position:absolute;
-  top:22px;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(360px,75vw);
-  height:4px;
-  border-radius:20px;
-  background:rgba(255,255,255,.5);
-  z-index:100;
-  overflow:hidden;
-}
-
-#progress{
-  width:0%;
-  height:100%;
-  border-radius:20px;
-  background:linear-gradient(90deg,#d985a5,#f3aac1);
-  transition:width .8s ease;
-}
-
-/* =========================
+/* ===============================
    PAGES
-========================= */
+================================ */
 
 .page{
-  position:absolute;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  padding:70px 22px 30px;
-  text-align:center;
-  opacity:0;
+    position:absolute;
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    text-align:center;
+
+    padding:25px;
+
+    opacity:0;
 }
 
 .page.active{
-  display:flex;
-  animation:pageIn .8s cubic-bezier(.2,.8,.2,1) forwards;
+    display:flex;
+    animation:pageIn 1s forwards;
 }
 
 @keyframes pageIn{
-  from{
-    opacity:0;
-    transform:scale(.96) translateY(20px);
-  }
-  to{
-    opacity:1;
-    transform:scale(1) translateY(0);
-  }
+
+    from{
+        opacity:0;
+        transform:
+        translateY(25px)
+        scale(.96);
+    }
+
+    to{
+        opacity:1;
+        transform:
+        translateY(0)
+        scale(1);
+    }
+
 }
 
-.label{
-  font-size:10px;
-  letter-spacing:4px;
-  color:#bd7f97;
-  margin-bottom:15px;
+/* ===============================
+   TEXT
+================================ */
+
+.small{
+    font-size:10px;
+    letter-spacing:4px;
+
+    color:rgba(255,255,255,.5);
+
+    margin-bottom:16px;
 }
 
-.title{
-  font-family:'Playfair Display','Cairo',sans-serif;
-  font-size:clamp(27px,7vw,43px);
-  font-weight:500;
-  color:#734d5d;
-  line-height:1.6;
+h1{
+    font-size:clamp(30px,8vw,52px);
+    font-weight:400;
+
+    margin-bottom:15px;
 }
 
-.desc{
-  max-width:450px;
-  font-size:14px;
-  line-height:2.2;
-  color:#896674;
-  margin-top:12px;
+p{
+    max-width:500px;
+
+    font-size:15px;
+    line-height:2;
+
+    color:rgba(255,255,255,.8);
 }
 
-/* BUTTON */
+/* ===============================
+   BUTTON
+================================ */
 
 .btn{
-  margin-top:25px;
-  padding:13px 30px;
-  border:none;
-  border-radius:100px;
-  color:white;
-  font-family:'Cairo';
-  font-size:13px;
-  cursor:pointer;
-  background:linear-gradient(135deg,#cf7898,#e99db5);
-  box-shadow:0 10px 30px rgba(196,101,134,.25);
-  transition:.25s;
+    margin-top:28px;
+
+    padding:14px 32px;
+
+    border-radius:50px;
+
+    border:1px solid
+    rgba(255,255,255,.22);
+
+    background:
+    rgba(255,255,255,.10);
+
+    color:white;
+
+    font-family:inherit;
+    font-size:14px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(15px);
+
+    transition:.3s;
 }
 
 .btn:hover{
-  transform:translateY(-3px);
+    transform:translateY(-3px);
+    background:rgba(255,255,255,.18);
 }
 
 .btn:active{
-  transform:scale(.94);
+    transform:scale(.93);
 }
 
-/* =========================
-   STAGE 1 - SECRET DOOR
-========================= */
-
-.roomWall{
-  position:absolute;
-  inset:0;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,.15) 0px,
-      rgba(255,255,255,.15) 2px,
-      transparent 2px,
-      transparent 70px
-    ),
-    linear-gradient(#f6d6df,#eec2d0);
-}
-
-.secretDoor{
-  width:220px;
-  height:330px;
-  position:relative;
-  border-radius:110px 110px 15px 15px;
-  background:
-    linear-gradient(90deg,rgba(255,255,255,.15),transparent 40%),
-    linear-gradient(135deg,#b96e87,#d992aa);
-  box-shadow:
-    inset 10px 0 30px rgba(255,255,255,.15),
-    0 25px 50px rgba(105,55,70,.25);
-  margin-top:20px;
-  cursor:pointer;
-  transition:1.2s cubic-bezier(.2,.8,.2,1);
-}
-
-.secretDoor::before{
-  content:"";
-  position:absolute;
-  inset:12px;
-  border:1px solid rgba(255,255,255,.4);
-  border-radius:100px 100px 8px 8px;
-}
-
-.secretDoor.open{
-  transform:perspective(800px) rotateY(-75deg);
-  transform-origin:left;
-}
-
-.doorKnob{
-  position:absolute;
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  background:#f8d69d;
-  right:28px;
-  top:52%;
-  box-shadow:0 0 15px rgba(255,230,160,.7);
-}
-
-.doorText{
-  position:absolute;
-  left:0;
-  right:0;
-  top:45%;
-  color:white;
-  font-size:17px;
-}
-
-/* =========================
-   STAGE 2 - GIFT
-========================= */
-
-.giftScene{
-  position:relative;
-  width:250px;
-  height:230px;
-  margin-top:20px;
-}
-
-.gift{
-  width:190px;
-  height:145px;
-  position:absolute;
-  left:50%;
-  bottom:10px;
-  transform:translateX(-50%);
-  cursor:pointer;
-}
-
-.giftBox{
-  position:absolute;
-  inset:45px 0 0;
-  border-radius:8px;
-  background:linear-gradient(135deg,#f19ab8,#c96b90);
-  box-shadow:0 25px 40px rgba(150,70,100,.2);
-}
-
-.ribbonV{
-  position:absolute;
-  width:32px;
-  height:100%;
-  left:50%;
-  transform:translateX(-50%);
-  background:#fff1d4;
-  z-index:3;
-}
-
-.giftLid{
-  position:absolute;
-  top:28px;
-  left:-8px;
-  width:206px;
-  height:45px;
-  border-radius:7px;
-  background:linear-gradient(135deg,#f7aac4,#d9789d);
-  z-index:4;
-  transition:1s;
-  transform-origin:left bottom;
-}
-
-.gift.open .giftLid{
-  transform:rotate(-22deg) translateY(-70px);
-}
-
-.bow{
-  position:absolute;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:85px;
-  height:45px;
-  z-index:6;
-}
-
-.bow:before,
-.bow:after{
-  content:"";
-  position:absolute;
-  width:42px;
-  height:28px;
-  border:9px solid #fff1d4;
-  border-radius:50% 50% 20% 50%;
-  top:4px;
-}
-
-.bow:before{right:40px}
-.bow:after{
-  left:40px;
-  transform:scaleX(-1);
-}
-
-.giftMessage{
-  position:absolute;
-  left:50%;
-  top:0;
-  transform:translate(-50%,20px);
-  width:220px;
-  opacity:0;
-  transition:1s;
-  color:#8d5167;
-  font-size:14px;
-  line-height:2;
-}
-
-.gift.open + .giftMessage{
-  opacity:1;
-  transform:translate(-50%,0);
-}
-
-/* =========================
-   STAGE 3 - MIRROR
-========================= */
-
-.mirror{
-  width:250px;
-  height:320px;
-  border-radius:130px 130px 30px 30px;
-  padding:15px;
-  position:relative;
-  background:linear-gradient(135deg,#d69aae,#fff0f3,#c97995);
-  box-shadow:0 20px 60px rgba(130,70,90,.2);
-  cursor:pointer;
-}
-
-.mirrorGlass{
-  width:100%;
-  height:100%;
-  border-radius:115px 115px 20px 20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:
-    linear-gradient(135deg,rgba(255,255,255,.9),rgba(213,223,235,.65)),
-    #eef4fa;
-  overflow:hidden;
-  position:relative;
-}
-
-.mirrorGlass:before{
-  content:"";
-  position:absolute;
-  width:50px;
-  height:500px;
-  background:rgba(255,255,255,.5);
-  transform:rotate(35deg);
-  left:-100px;
-  transition:1.5s;
-}
-
-.mirror.reveal .mirrorGlass:before{
-  left:350px;
-}
-
-.mirrorHidden{
-  opacity:0;
-  transform:scale(.8);
-  transition:1s;
-  color:#9b5870;
-  padding:25px;
-  line-height:2.2;
-  font-size:15px;
-}
-
-.mirror.reveal .mirrorHidden{
-  opacity:1;
-  transform:scale(1);
-}
-
-/* =========================
-   STAGE 4 - FLOWERS
-========================= */
-
-.flowerGarden{
-  width:min(500px,95vw);
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-top:25px;
-}
-
-.flower{
-  width:95px;
-  height:120px;
-  cursor:pointer;
-  position:relative;
-  transition:.3s;
-}
-
-.flower:hover{
-  transform:translateY(-8px);
-}
-
-.stem{
-  position:absolute;
-  width:5px;
-  height:55px;
-  background:#72966f;
-  left:45px;
-  bottom:0;
-  border-radius:10px;
-}
-
-.flowerHead{
-  position:absolute;
-  width:65px;
-  height:65px;
-  left:15px;
-  top:0;
-}
-
-.petalF{
-  position:absolute;
-  width:32px;
-  height:42px;
-  border-radius:50% 50% 45% 45%;
-  background:#e88faa;
-  left:16px;
-  top:10px;
-  transform-origin:16px 25px;
-}
-
-.petalF:nth-child(1){transform:rotate(0deg) translateY(-17px)}
-.petalF:nth-child(2){transform:rotate(72deg) translateY(-17px)}
-.petalF:nth-child(3){transform:rotate(144deg) translateY(-17px)}
-.petalF:nth-child(4){transform:rotate(216deg) translateY(-17px)}
-.petalF:nth-child(5){transform:rotate(288deg) translateY(-17px)}
-
-.flowerCenter{
-  position:absolute;
-  width:22px;
-  height:22px;
-  background:#ffd98d;
-  border-radius:50%;
-  left:22px;
-  top:22px;
-  z-index:5;
-}
-
-#flowerMessage{
-  min-height:55px;
-  margin-top:20px;
-  font-size:14px;
-  color:#875769;
-  transition:.4s;
-}
-
-/* =========================
-   STAGE 5 - SECRET DRAWERS
-========================= */
-
-.drawerBox{
-  width:290px;
-  padding:20px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#d9a2b4,#ba748d);
-  box-shadow:0 25px 55px rgba(130,70,90,.22);
-}
-
-.drawer{
-  height:62px;
-  margin:10px 0;
-  background:linear-gradient(135deg,#f7dce4,#e8b6c6);
-  border-radius:8px;
-  position:relative;
-  cursor:pointer;
-  transition:.6s;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#895466;
-  font-size:13px;
-}
-
-.drawer:after{
-  content:"";
-  position:absolute;
-  width:35px;
-  height:8px;
-  border-radius:10px;
-  background:#b46e87;
-  bottom:10px;
-}
-
-.drawer.open{
-  transform:translateX(-35px);
-}
-
-.drawerText{
-  opacity:0;
-  transition:.5s;
-}
-
-.drawer.open .drawerText{
-  opacity:1;
-}
-
-/* =========================
-   STAGE 6 - POLAROIDS
-========================= */
-
-.photos{
-  position:relative;
-  width:min(550px,95vw);
-  height:330px;
-  margin-top:20px;
-}
-
-.polaroid{
-  width:145px;
-  height:180px;
-  position:absolute;
-  background:white;
-  padding:8px 8px 30px;
-  box-shadow:0 15px 35px rgba(100,60,70,.2);
-  cursor:pointer;
-  transition:.6s cubic-bezier(.2,.8,.2,1);
-}
-
-.polaroid:hover{
-  z-index:20;
-  transform:scale(1.08) rotate(0deg)!important;
-}
-
-.photoInside{
-  width:100%;
-  height:125px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:50px;
-}
-
-.p1{
-  left:8%;
-  top:30px;
-  transform:rotate(-12deg);
-  background:#fff;
-}
-
-.p2{
-  left:35%;
-  top:5px;
-  transform:rotate(5deg);
-}
-
-.p3{
-  right:8%;
-  top:45px;
-  transform:rotate(12deg);
-}
-
-.photoCaption{
-  font-size:10px;
-  color:#986275;
-  margin-top:6px;
-}
-
-.photoMessage{
-  margin-top:10px;
-  font-size:13px;
-  color:#8c5a6b;
-  opacity:0;
-  transition:.6s;
-}
-
-.photoMessage.show{
-  opacity:1;
-}
-
-/* =========================
-   STAGE 7 - WISH
-========================= */
-
-.wishOrb{
-  width:230px;
-  height:230px;
-  border-radius:50%;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:
-    radial-gradient(circle at 35% 30%,#fff,#f7c8da 35%,#df89aa 75%);
-  box-shadow:
-    inset -20px -20px 50px rgba(150,50,90,.18),
-    0 0 70px rgba(230,135,170,.35);
-  cursor:pointer;
-  animation:orb 4s ease-in-out infinite;
-}
-
-@keyframes orb{
-  0%,100%{transform:translateY(0) scale(1)}
-  50%{transform:translateY(-12px) scale(1.03)}
-}
-
-.orbText{
-  width:150px;
-  color:#914e6a;
-  font-size:14px;
-  line-height:2;
-}
-
-.spark{
-  position:absolute;
-  width:4px;
-  height:4px;
-  background:white;
-  border-radius:50%;
-  animation:sparkle 2s infinite;
-}
-
-@keyframes sparkle{
-  0%,100%{opacity:.2;transform:scale(.5)}
-  50%{opacity:1;transform:scale(1.8)}
-}
-
-.wishResult{
-  margin-top:20px;
-  min-height:60px;
-  max-width:420px;
-  color:#8a5669;
-  font-size:14px;
-  line-height:2;
-}
-
-/* =========================
-   STAGE 8 - FINAL BOX
-========================= */
-
-.finalRoom{
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at center,rgba(255,255,255,.8),transparent 35%),
-    linear-gradient(135deg,#f3cad8,#e9b2c6);
-}
-
-.finalBox{
-  width:250px;
-  height:180px;
-  position:relative;
-  cursor:pointer;
-  margin-top:20px;
-}
-
-.finalBase{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  height:140px;
-  border-radius:15px;
-  background:linear-gradient(135deg,#a95776,#e69ab4);
-  box-shadow:0 30px 60px rgba(130,60,90,.25);
-}
-
-.finalLid{
-  position:absolute;
-  top:0;
-  left:-10px;
-  width:270px;
-  height:65px;
-  border-radius:15px;
-  background:linear-gradient(135deg,#f0aac0,#c87091);
-  transition:1s cubic-bezier(.2,.8,.2,1);
-  transform-origin:left bottom;
-}
-
-.finalBox.open .finalLid{
-  transform:rotateX(110deg) translateY(-20px);
-}
-
-.finalGlow{
-  position:absolute;
-  width:180px;
-  height:180px;
-  left:35px;
-  top:-50px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.9),rgba(255,255,255,0));
-  opacity:0;
-  transition:1.2s;
-}
-
-.finalBox.open .finalGlow{
-  opacity:1;
-  transform:scale(1.5);
-}
-
-.finalMessage{
-  max-width:500px;
-  margin-top:30px;
-  padding:22px;
-  border-radius:20px;
-  background:rgba(255,255,255,.5);
-  backdrop-filter:blur(10px);
-  font-size:14px;
-  line-height:2.2;
-  color:#754c5d;
-  opacity:0;
-  transform:translateY(20px);
-  transition:1s;
-}
-
-.finalMessage.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* hearts */
-
-#hearts{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:50;
-}
+/* ===============================
+   HEART
+================================ */
 
 .heart{
-  position:absolute;
-  bottom:-30px;
-  font-size:20px;
-  animation:heartUp var(--time) linear forwards;
+    font-size:90px;
+
+    filter:
+    drop-shadow(
+    0 0 25px
+    rgba(255,100,160,.6));
+
+    animation:heartbeat 1.8s infinite;
 }
 
-@keyframes heartUp{
-  0%{
-    transform:translateY(0) rotate(0deg);
-    opacity:0;
-  }
-  15%{opacity:1}
-  100%{
-    transform:translateY(-110vh) rotate(360deg);
-    opacity:0;
-  }
+@keyframes heartbeat{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.12);
+    }
+
 }
 
-/* =========================
+/* ===============================
+   GLASS BOX
+================================ */
+
+.mission{
+    width:min(440px,92vw);
+
+    padding:32px 22px;
+
+    border-radius:30px;
+
+    background:
+    rgba(255,255,255,.06);
+
+    border:
+    1px solid
+    rgba(255,255,255,.12);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+    0 25px 80px
+    rgba(0,0,0,.3);
+}
+
+/* ===============================
+   GAME
+================================ */
+
+#gameArea{
+    position:absolute;
+    inset:0;
+}
+
+.counter{
+    position:absolute;
+
+    top:35px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    padding:10px 20px;
+
+    border-radius:50px;
+
+    font-size:14px;
+
+    background:
+    rgba(255,255,255,.1);
+
+    border:
+    1px solid
+    rgba(255,255,255,.12);
+
+    backdrop-filter:blur(12px);
+
+    z-index:10;
+}
+
+.magicItem{
+
+    position:absolute;
+
+    width:75px;
+    height:75px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    font-size:34px;
+
+    cursor:pointer;
+
+    background:
+    rgba(255,255,255,.12);
+
+    border:
+    1px solid
+    rgba(255,255,255,.3);
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.2);
+
+    animation:float 2.5s infinite ease-in-out;
+
+    transition:.25s;
+}
+
+.magicItem:active{
+    transform:scale(.8);
+}
+
+@keyframes float{
+
+    0%,100%{
+        transform:
+        translateY(0)
+        rotate(0);
+    }
+
+    50%{
+        transform:
+        translateY(-14px)
+        rotate(7deg);
+    }
+
+}
+
+/* ===============================
+   ENVELOPE SCENE
+================================ */
+
+.envelopeScene{
+
+    position:relative;
+
+    width:330px;
+    height:300px;
+
+    margin:20px auto;
+
+    perspective:1200px;
+}
+
+/* الظرف */
+
+.envelope{
+
+    position:absolute;
+
+    width:300px;
+    height:190px;
+
+    left:50%;
+    bottom:20px;
+
+    transform:translateX(-50%);
+
+    cursor:pointer;
+
+    filter:
+    drop-shadow(
+    0 25px 35px
+    rgba(0,0,0,.4));
+
+    transition:.3s;
+}
+
+.envelope:not(.open):hover{
+    transform:
+    translateX(-50%)
+    translateY(-5px);
+}
+
+/* خلفية الظرف */
+
+.envBack{
+
+    position:absolute;
+    inset:0;
+
+    border-radius:14px;
+
+    background:
+
+    linear-gradient(
+    135deg,
+    #f6bfd5,
+    #df88af 50%,
+    #b85d88);
+
+    overflow:hidden;
+}
+
+/* الورقة */
+
+.letter{
+
+    position:absolute;
+
+    width:250px;
+
+    min-height:230px;
+
+    left:25px;
+
+    bottom:18px;
+
+    padding:22px 18px;
+
+    background:
+
+    linear-gradient(
+    90deg,
+    #fffafa,
+    #ffffff,
+    #fff8fb);
+
+    color:#70485f;
+
+    border-radius:8px;
+
+    z-index:2;
+
+    text-align:right;
+
+    opacity:0;
+
+    transform:
+    translateY(90px)
+    scale(.94);
+
+    transition:
+
+    transform 1.5s
+    cubic-bezier(.22,.9,.25,1),
+
+    opacity .7s ease;
+
+    box-shadow:
+    0 15px 30px
+    rgba(0,0,0,.2);
+}
+
+/* عنوان الرسالة */
+
+.letterTitle{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    color:#b45882;
+
+    margin-bottom:12px;
+}
+
+/* نص الرسالة */
+
+.letterText{
+
+    font-size:12px;
+
+    line-height:1.9;
+}
+
+/* الغطاء */
+
+.flap{
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:0;
+    height:0;
+
+    border-left:
+    150px solid transparent;
+
+    border-right:
+    150px solid transparent;
+
+    border-top:
+    105px solid #f2b8d0;
+
+    transform-origin:
+    top center;
+
+    z-index:8;
+
+    transition:
+
+    transform 1s
+    cubic-bezier(.4,0,.2,1);
+}
+
+/* مقدمة الظرف */
+
+.envFront{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:6;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+    145deg,
+    #efacc8,
+    #cf729f);
+
+    clip-path:
+
+    polygon(
+    0 0,
+    50% 55%,
+    100% 0,
+    100% 100%,
+    0 100%);
+}
+
+/* الختم */
+
+.seal{
+
+    position:absolute;
+
+    width:52px;
+    height:52px;
+
+    left:50%;
+    top:50%;
+
+    transform:
+    translate(-50%,-50%);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    z-index:10;
+
+    font-size:20px;
+
+    background:
+
+    radial-gradient(
+    circle at 30% 30%,
+    white,
+    #f4bed3 40%,
+    #bd628c);
+
+    box-shadow:
+    0 6px 18px
+    rgba(0,0,0,.3);
+
+    transition:
+    opacity .5s ease,
+    transform .7s ease;
+}
+
+/* ===============================
+   OPEN ENVELOPE
+================================ */
+
+.envelope.open{
+
+    cursor:default;
+}
+
+/* الغطاء ينفتح */
+
+.envelope.open .flap{
+
+    transform:
+    rotateX(180deg);
+
+    z-index:1;
+}
+
+/* الرسالة تطلع */
+
+.envelope.open .letter{
+
+    opacity:1;
+
+    transform:
+    translateY(-145px)
+    scale(1);
+
+    z-index:9;
+}
+
+/* الختم يختفي */
+
+.envelope.open .seal{
+
+    opacity:0;
+
+    transform:
+    translate(-50%,-50%)
+    scale(1.6);
+}
+
+/* ===============================
+   BIG BUTTON
+================================ */
+
+.bigButton{
+
+    width:160px;
+    height:160px;
+
+    border:none;
+
+    border-radius:50%;
+
+    color:white;
+
+    font-family:inherit;
+    font-size:17px;
+
+    cursor:pointer;
+
+    background:
+
+    radial-gradient(
+    circle at 30% 30%,
+    #fff,
+    #ffc4dc 30%,
+    #f45f9d 70%);
+
+    box-shadow:
+
+    0 0 30px #ff8bb9,
+
+    0 0 90px
+    rgba(255,80,150,.6);
+
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+
+    0%,100%{
+
+        transform:scale(1);
+
+        box-shadow:
+
+        0 0 30px #ff8bb9,
+
+        0 0 80px
+        rgba(255,80,150,.5);
+    }
+
+    50%{
+
+        transform:scale(1.08);
+
+        box-shadow:
+
+        0 0 55px #ffc0d7,
+
+        0 0 130px
+        rgba(255,80,150,.8);
+    }
+
+}
+
+/* ===============================
+   CELEBRATION
+================================ */
+
+#celebration{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    overflow:hidden;
+
+    z-index:100;
+}
+
+/* Confetti */
+
+.confetti{
+
+    position:absolute;
+
+    width:10px;
+    height:16px;
+
+    animation:
+    fall 4s linear forwards;
+}
+
+@keyframes fall{
+
+    from{
+
+        transform:
+        translateY(-40px)
+        rotate(0deg);
+
+        opacity:1;
+    }
+
+    to{
+
+        transform:
+        translateY(110vh)
+        rotate(720deg);
+
+        opacity:0;
+    }
+
+}
+
+/* Balloons */
+
+.balloon{
+
+    position:absolute;
+
+    bottom:-150px;
+
+    width:65px;
+    height:82px;
+
+    border-radius:
+
+    50% 50%
+    48% 48%;
+
+    box-shadow:
+
+    inset -10px -10px 20px
+    rgba(0,0,0,.12),
+
+    0 10px 20px
+    rgba(0,0,0,.15);
+
+    animation:
+    rise 8s linear forwards;
+}
+
+.balloon:after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:-60px;
+
+    left:50%;
+
+    width:1px;
+    height:65px;
+
+    background:
+    rgba(255,255,255,.7);
+}
+
+@keyframes rise{
+
+    to{
+
+        transform:
+        translateY(-130vh)
+        rotate(20deg);
+    }
+
+}
+
+/* ===============================
+   FINAL
+================================ */
+
+.finalTitle{
+
+    font-size:
+    clamp(32px,9vw,55px);
+
+    background:
+
+    linear-gradient(
+    90deg,
+    white,
+    #ffd1e4,
+    white);
+
+    background-size:200%;
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+    animation:
+    shine 3s infinite;
+}
+
+@keyframes shine{
+
+    to{
+        background-position:200%;
+    }
+
+}
+
+.glass{
+
+    max-width:510px;
+
+    padding:28px 23px;
+
+    border-radius:30px;
+
+    background:
+    rgba(255,255,255,.09);
+
+    border:
+    1px solid
+    rgba(255,255,255,.15);
+
+    backdrop-filter:
+    blur(20px);
+
+    box-shadow:
+    0 25px 80px
+    rgba(0,0,0,.25);
+}
+
+/* ===============================
    MOBILE
-========================= */
+================================ */
 
 @media(max-width:500px){
 
-  .secretDoor{
-    width:190px;
-    height:290px;
-  }
+    p{
+        font-size:14px;
+    }
 
-  .mirror{
-    width:220px;
-    height:285px;
-  }
+    .magicItem{
+        width:65px;
+        height:65px;
+        font-size:28px;
+    }
 
-  .photos{
-    transform:scale(.9);
-  }
-
-  .title{
-    font-size:29px;
-  }
-
-  .desc{
-    font-size:13px;
-  }
+    .envelopeScene{
+        transform:scale(.9);
+    }
 
 }
+
 </style>
 </head>
 
 <body>
 
+
+<!-- ===============================
+     BACKGROUND
+================================ -->
+
+<div id="sky"></div>
+
+
+<!-- ===============================
+     CELEBRATION AREA
+================================ -->
+
+<div id="celebration"></div>
+
+
+<!-- ===============================
+     APP
+================================ -->
+
 <div id="app">
 
-<div class="bubble b1"></div>
-<div class="bubble b2"></div>
-<div class="bubble b3"></div>
-<div class="bubble b4"></div>
 
-<div id="hearts"></div>
+<!-- PAGE 1 -->
 
-<div id="progressWrap">
-<div id="progress"></div>
-</div>
+<section class="page active" id="p1">
 
+    <div class="heart">🤍</div>
 
-<!-- =========================
-PAGE 1
-========================= -->
+    <div class="small">
+        SPECIAL MESSAGE
+    </div>
 
-<div class="page active" id="page1">
+    <h1>
+        بنين...
+    </h1>
 
-<div class="label">A SECRET EXPERIENCE</div>
+    <p>
+        سمعت إن مزاجج اليوم مو بأفضل حال،
+        ولهذا قررت أتدخل بشكل رسمي.
+    </p>
 
-<div class="title">
-غرفة بنين السرّية 🎀
-</div>
+    <button class="btn" onclick="nextPage()">
+        ابدئي المهمة ✨
+    </button>
 
-<div class="desc">
-هاي المرة مو رحلة ولا كتاب...<br>
-هاي غرفة صغيرة بيها مراحل، وكل مرحلة مخبية لج شيء مختلف.
-</div>
+</section>
 
-<button class="btn" onclick="nextPage()">
-ندخل؟ 🎀
-</button>
 
-</div>
 
+<!-- PAGE 2 -->
 
-<!-- =========================
-PAGE 2 DOOR
-========================= -->
+<section class="page" id="p2">
 
-<div class="page" id="page2">
+    <div class="mission">
 
-<div class="label">FIRST STEP</div>
+        <div class="small">
+            MISSION 01
+        </div>
 
-<div class="title">
-أكو باب واحد...
-</div>
+        <h1>
+            مهمة إنقاذ المزاج
+        </h1>
 
-<div class="desc">
-وراه تبدأ الفعالية كلها.<br>
-بس لازم إنتِ بنفسج تفتحينه.
-</div>
+        <p>
+            المطلوب منج هسه بسيط جدًا...
+            <br>
+            ممنوع التفكير بأي شي لمدة كم دقيقة.
+        </p>
 
-<div class="secretDoor" id="door" onclick="openDoor()">
-<div class="doorKnob"></div>
-<div class="doorText">اضغطي هنا</div>
-</div>
+        <p style="margin-top:15px;color:#ffd2e3">
 
-</div>
+            لأن أكو شخص قرر يحاول
+            يسرق من يومج ولو شوية من الحزن
+            ويرميها بعيد.
 
+        </p>
 
-<!-- =========================
-PAGE 3 GIFT
-========================= -->
+        <button class="btn" onclick="nextPage()">
 
-<div class="page" id="page3">
+            موافقة على المهمة 🤝
 
-<div class="label">A LITTLE GIFT</div>
+        </button>
 
-<div class="title">
-أول شيء بالغرفة 🎁
-</div>
+    </div>
 
-<div class="desc">
-أكو هدية... بس ما أعرف إذا تعرفين شنو بيها.
-</div>
+</section>
 
-<div class="giftScene">
 
-<div class="gift" id="gift" onclick="openGift()">
 
-<div class="bow"></div>
+<!-- PAGE 3 GAME -->
 
-<div class="giftBox">
-<div class="ribbonV"></div>
-</div>
+<section class="page" id="p3">
 
-<div class="giftLid"></div>
+    <div class="counter">
 
-</div>
+        اجمعي الأشياء الحلوة:
 
-<div class="giftMessage">
-مو كل هدية لازم تكون شيء ينمسك باليد...<br>
-أحيانًا الفكرة نفسها هي الهدية 🤍
-</div>
+        <span id="score">0</span>/7
 
-</div>
+    </div>
 
-<button class="btn" id="giftNext" style="display:none" onclick="nextPage()">
-نروح للمرحلة الثانية
-</button>
+    <div id="gameArea"></div>
 
-</div>
+</section>
 
 
-<!-- =========================
-PAGE 4 MIRROR
-========================= -->
-
-<div class="page" id="page4">
-
-<div class="label">SECRET MIRROR</div>
 
-<div class="title">
-هاي مو مراية عادية 🪞
-</div>
+<!-- PAGE 4 MESSAGES -->
 
-<div class="desc">
-يمكن إذا قربتي منها تطلع لج رسالة.
-</div>
+<section class="page" id="p4">
 
-<div class="mirror" id="mirror" onclick="revealMirror()">
+    <div class="mission">
 
-<div class="mirrorGlass">
+        <div class="small">
+            MISSION COMPLETE
+        </div>
 
-<div class="mirrorHidden">
-أكو ناس وجودهم<br>
-مو لازم يكون بصوت عالي حتى ينلاحظ...<br><br>
+        <h1>
+            نجحتي بالمهمة ✨
+        </h1>
 
-يكفي إنهم يمرّون،<br>
-ويتركون المكان ألطف.
-</div>
+        <div id="messageBox"
+        style="
+        min-height:120px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        line-height:2;
+        font-size:16px">
 
-</div>
+            هسه عندج رسائل مخفية...
 
-</div>
+        </div>
 
-<button class="btn" id="mirrorNext" style="display:none" onclick="nextPage()">
-كمّلي 🌸
-</button>
 
-</div>
+        <button class="btn"
+        id="messageButton"
+        onclick="showRandomMessage()">
 
+            افتحي رسالة 💌
 
-<!-- =========================
-PAGE 5 FLOWERS
-========================= -->
+        </button>
 
-<div class="page" id="page5">
 
-<div class="label">FLOWER GARDEN</div>
+        <button class="btn"
+        id="continueMessages"
+        onclick="nextPage()"
+        style="display:none">
 
-<div class="title">
-اختاري وردة 🌷
-</div>
+            أكو شي ينتظرج بعدها ✨
 
-<div class="desc">
-كل وردة مخبية كلمة مختلفة.
-</div>
+        </button>
 
-<div class="flowerGarden">
+    </div>
 
-<div class="flower" onclick="pickFlower(0)">
-<div class="flowerHead">
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="flowerCenter"></div>
-</div>
-<div class="stem"></div>
-</div>
+</section>
 
-<div class="flower" onclick="pickFlower(1)">
-<div class="flowerHead">
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="flowerCenter"></div>
-</div>
-<div class="stem"></div>
-</div>
 
-<div class="flower" onclick="pickFlower(2)">
-<div class="flowerHead">
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="flowerCenter"></div>
-</div>
-<div class="stem"></div>
-</div>
 
-<div class="flower" onclick="pickFlower(3)">
-<div class="flowerHead">
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="petalF"></div>
-<div class="flowerCenter"></div>
-</div>
-<div class="stem"></div>
-</div>
+<!-- PAGE 5 ENVELOPE -->
 
-</div>
+<section class="page" id="p5">
 
-<div id="flowerMessage"></div>
+    <div class="small">
+        SPECIAL DELIVERY
+    </div>
 
-<button class="btn" id="flowerNext" style="display:none" onclick="nextPage()">
-نكمل 🎀
-</button>
+    <h1>
+        أكو رسالة إلج 💌
+    </h1>
 
-</div>
+    <p id="envelopeHint">
 
+        شكلها أكو شي داخل هذا الظرف...
+        <br>
+        اضغطي عليه حتى تعرفين ✨
 
-<!-- =========================
-PAGE 6 DRAWERS
-========================= -->
+    </p>
 
-<div class="page" id="page6">
 
-<div class="label">SECRET DRAWERS</div>
+    <div class="envelopeScene">
 
-<div class="title">
-أدراج الأسرار 🎀
-</div>
+        <div class="envelope"
+        id="envelope"
+        onclick="openEnvelope()">
 
-<div class="desc">
-مو لازم تفتحين كلها...<br>
-بس كل درج عنده شيء يريد يكوله.
-</div>
 
-<div class="drawerBox">
+            <!-- BACK -->
 
-<div class="drawer" onclick="openDrawer(this)">
-<div class="drawerText">
-أول سر: لا تستهينين بتأثيرج على الناس.
-</div>
-</div>
+            <div class="envBack"></div>
 
-<div class="drawer" onclick="openDrawer(this)">
-<div class="drawerText">
-ثاني سر: الابتسامة اللي تسوينها لشخص ممكن تغير يومه.
-</div>
-</div>
 
-<div class="drawer" onclick="openDrawer(this)">
-<div class="drawerText">
-آخر سر: بعض الأشخاص يستحقون نسويلهم شيء مختلف.
-</div>
-</div>
+            <!-- LETTER -->
 
-</div>
+            <div class="letter">
 
-<button class="btn" onclick="nextPage()">
-أطلع من الغرفة 🚪
-</button>
+                <div class="letterTitle">
 
-</div>
+                    إلى بنين 🤍
 
+                </div>
 
-<!-- =========================
-PAGE 7 POLAROIDS
-========================= -->
 
-<div class="page" id="page7">
+                <div class="letterText">
 
-<div class="label">LITTLE MOMENTS</div>
+                    يمكن اليوم مو أحسن يوم،
+                    ويمكن أكو شي مضايقج
+                    حتى لو ما تعرفين شنو هو...
 
-<div class="title">
-مو كل الذكريات صور 📸
-</div>
+                    <br><br>
 
-<div class="desc">
-اضغطي على الصور.
-</div>
+                    بس حبيت أذكّرج بشغلة:
 
-<div class="photos">
+                    مو كل شعور سيء يبقى،
+                    ومو كل يوم ثقيل راح يستمر.
 
-<div class="polaroid p1" onclick="showPhotoMessage('أكو لحظات صغيرة... بس تبقى أطول من المتوقع.')">
-<div class="photoInside">🌷</div>
-<div class="photoCaption">little things</div>
-</div>
+                    <br><br>
 
-<div class="polaroid p2" onclick="showPhotoMessage('مو لازم ننتظر مناسبة حتى نسوي شيء حلو.')">
-<div class="photoInside">🎀</div>
-<div class="photoCaption">a small surprise</div>
-</div>
+                    خلي هاللحظة تكون استراحة صغيرة إلج،
+                    وخلي كلشي ثقيل برا هالصفحة شويّة.
 
-<div class="polaroid p3" onclick="showPhotoMessage('يمكن أجمل شيء إن شخص يتذكر إن يغير مزاجج.')">
-<div class="photoInside">🤍</div>
-<div class="photoCaption">for you</div>
-</div>
+                    <br><br>
 
-</div>
+                    وأتمنى هسه،
+                    ولو ابتسامة صغيرة
+                    رجعت لوجهج 🤍
 
-<div class="photoMessage" id="photoMessage"></div>
+                </div>
 
-<button class="btn" id="photoNext" style="display:none" onclick="nextPage()">
-بقي مرحلة ✨
-</button>
+            </div>
 
-</div>
 
+            <!-- FLAP -->
 
-<!-- =========================
-PAGE 8 WISH
-========================= -->
+            <div class="flap"></div>
 
-<div class="page" id="page8">
 
-<div class="label">MAKE A WISH</div>
+            <!-- FRONT -->
 
-<div class="title">
-عندي طلب صغير 🌙
-</div>
+            <div class="envFront"></div>
 
-<div class="desc">
-فكري بأمنية أو شيء تتمنينه...<br>
-بس لا تقولينها.
-</div>
 
-<div class="wishOrb" onclick="makeWish()">
+            <!-- SEAL -->
 
-<div class="orbText">
-اضغطي هنا<br>
-وخلي الأمنية بينج وبين نفسج 🤍
-</div>
+            <div class="seal">
 
-<div class="spark" style="top:20%;left:15%"></div>
-<div class="spark" style="top:70%;left:10%;animation-delay:.5s"></div>
-<div class="spark" style="top:20%;right:15%;animation-delay:1s"></div>
-<div class="spark" style="bottom:15%;right:20%;animation-delay:1.5s"></div>
+                🤍
 
-</div>
+            </div>
 
-<div class="wishResult" id="wishResult"></div>
+        </div>
 
-<button class="btn" id="wishNext" style="display:none" onclick="nextPage()">
-آخر مفاجأة 🎁
-</button>
+    </div>
 
-</div>
 
+    <button class="btn"
+    id="afterEnvelope"
+    onclick="nextPage()"
+    style="display:none">
 
-<!-- =========================
-PAGE 9 FINAL
-========================= -->
+        كمّلي للمفاجأة ✨
 
-<div class="page" id="page9">
+    </button>
 
-<div class="finalRoom"></div>
+</section>
 
-<div class="label" style="z-index:2">THE LAST SURPRISE</div>
 
-<div class="title" style="z-index:2">
-بقي هذا الصندوق...
-</div>
 
-<div class="desc" style="z-index:2">
-وأعتقد صار الوقت تعرفين ليش سويت كل هذا.
-</div>
+<!-- PAGE 6 FINAL BUTTON -->
 
-<div class="finalBox" id="finalBox" onclick="openFinal()" style="z-index:2">
+<section class="page" id="p6">
 
-<div class="finalGlow"></div>
+    <div class="small">
+        FINAL MISSION
+    </div>
 
-<div class="finalBase"></div>
-<div class="finalLid"></div>
+    <h1>
+        باقي شي واحد
+    </h1>
+
+    <p style="margin-bottom:30px">
+
+        هذا الزر ممنوع تضغطينه
+        إلا إذا مستعدة تغيرين
+        جو الشاشة كلها.
+
+    </p>
+
+
+    <button class="bigButton"
+    onclick="celebrate()">
+
+        اضغطي هنا ✨
+
+    </button>
+
+</section>
+
+
+
+<!-- PAGE 7 FINAL -->
+
+<section class="page" id="p7">
+
+    <div class="glass">
+
+        <div class="small">
+            MISSION FINISHED
+        </div>
+
+
+        <h1 class="finalTitle">
+
+            هاي ابتسامتج وينها؟ ✨
+
+        </h1>
+
+
+        <p style="margin-top:20px">
+
+            ما أعرف شنو السبب
+            اللي خلا يومج ثقيل،
+            ويمكن حتى إنتِ
+            ما تعرفين السبب.
+
+            <br><br>
+
+            بس أعرف شغلة وحدة...
+
+            <br><br>
+
+            مو لازم تحلين كل مشاكل الدنيا اليوم،
+            ومو لازم تكونين
+            بأفضل نسخة من نفسج دائمًا.
+
+            <br><br>
+
+            خذي نفس،
+            ارتاحي،
+            غيري جو،
+            وخلي هذا اليوم يمر
+            مثل أي يوم مر قبله.
+
+            <br><br>
+
+            <b style="color:#ffd1e3">
+
+            وأتمنى ولو لدقائق بسيطة،
+            هاي الفعالية خلتج تبتسمين.
+
+            </b>
+
+            <br><br>
+
+            لأن هذا كل الهدف منها 🤍
+
+        </p>
+
+
+        <button class="btn"
+        onclick="location.reload()">
+
+            أعيد الرحلة 🔄
+
+        </button>
+
+    </div>
+
+</section>
+
 
 </div>
 
-<div class="finalMessage" id="finalMessage" style="z-index:2">
-
-بنين... 🤍<br><br>
-
-هاي الفعالية كلها ما كانت حتى أكتب كلام كبير أو أسوي شيء مثالي.<br>
-
-بالعكس، كانت مجرد فكرة مختلفة گلت أجربها وياج.<br><br>
-
-كل مرحلة بيها شيء بسيط، لأن أحيانًا الأشياء البسيطة هي اللي تبقى بالبال أكثر.<br>
-
-مرة هدية، مرة وردة، مرة رسالة مخفية... بس بالنهاية كلها كانت تؤدي لنفس الفكرة:<br><br>
-
-<strong>
-إن أكو شخص حب يسويلج شيء مختلف بس حتى يشوف رأيج وابتسامتج.
-</strong><br><br>
-
-وهسه بما إنج وصلتي للنهاية...<br>
-
-أريد رأيج الحقيقي بكل الفعالية، من أول باب لآخر صندوق 😌🎀<br>
-
-شنو أكثر مرحلة عجبتج؟ وشنو المرحلة اللي ما كنتِ متوقعتها؟<br><br>
-
-وبصراحة... هاي مو النهاية الكاملة.<br>
-يمكن بعد أكو فعالية ثانية بفكرة ما تتوقعينها أصلًا 🤍
-
-</div>
-
-</div>
-
-</div>
 
 
 <script>
 
-/* =========================
-VARIABLES
-========================= */
+/* ===============================
+   CREATE STARS
+================================ */
 
-let currentPage = 1;
+const sky =
+document.getElementById("sky");
 
-const progress = document.getElementById("progress");
+
+for(let i=0;i<130;i++){
+
+    const star =
+    document.createElement("div");
+
+    star.className="star";
+
+    star.style.left =
+    Math.random()*100+"%";
+
+    star.style.top =
+    Math.random()*100+"%";
+
+    star.style.animationDelay =
+    Math.random()*3+"s";
+
+    sky.appendChild(star);
+
+}
 
 
-/* =========================
-NEXT PAGE
-========================= */
+/* ===============================
+   PAGE NAVIGATION
+================================ */
+
+let current=1;
+
 
 function nextPage(){
 
-  if(currentPage >= 9) return;
+    const oldPage =
+    document.getElementById("p"+current);
 
-  const oldPage =
-    document.getElementById("page"+currentPage);
+    oldPage.classList.remove("active");
 
-  oldPage.classList.remove("active");
+    current++;
 
-  currentPage++;
+    const newPage =
+    document.getElementById("p"+current);
 
-  const newPage =
-    document.getElementById("page"+currentPage);
+    if(newPage){
 
-  setTimeout(()=>{
-    newPage.classList.add("active");
-  },250);
+        newPage.classList.add("active");
 
-  updateProgress();
-
-  createTinyHearts(5);
-
-}
+    }
 
 
-/* =========================
-PROGRESS
-========================= */
+    /* بدء اللعبة */
 
-function updateProgress(){
+    if(current===3){
 
-  const percentage =
-    ((currentPage-1)/8)*100;
+        startGame();
 
-  progress.style.width =
-    percentage+"%";
+    }
 
 }
 
 
-/* =========================
-DOOR
-========================= */
+/* ===============================
+   GAME
+================================ */
 
-let doorOpened=false;
+let score=0;
 
-function openDoor(){
 
-  if(doorOpened) return;
+const items=[
+    "⭐",
+    "🌸",
+    "✨",
+    "🎈",
+    "🍫",
+    "🌙",
+    "🦋"
+];
 
-  doorOpened=true;
 
-  const door =
-    document.getElementById("door");
+function startGame(){
 
-  door.classList.add("open");
+    const area =
+    document.getElementById("gameArea");
 
-  createTinyHearts(12);
+    area.innerHTML="";
 
-  setTimeout(()=>{
-    nextPage();
-  },1300);
+    score=0;
+
+    document.getElementById("score")
+    .textContent=score;
+
+
+    items.forEach((emoji,index)=>{
+
+
+        const item =
+        document.createElement("div");
+
+
+        item.className="magicItem";
+
+        item.textContent=emoji;
+
+
+        const x=
+        5+Math.random()*80;
+
+        const y=
+        15+Math.random()*65;
+
+
+        item.style.left=x+"%";
+
+        item.style.top=y+"%";
+
+        item.style.animationDelay=
+        index*.2+"s";
+
+
+        item.onclick=function(){
+
+
+            item.style.opacity="0";
+
+            item.style.transform=
+            "scale(0)";
+
+
+            createSpark(
+
+                item.getBoundingClientRect().left,
+
+                item.getBoundingClientRect().top
+
+            );
+
+
+            score++;
+
+
+            document.getElementById("score")
+            .textContent=score;
+
+
+            setTimeout(()=>{
+
+                item.remove();
+
+            },300);
+
+
+            if(score===7){
+
+                setTimeout(()=>{
+
+                    nextPage();
+
+                },700);
+
+            }
+
+        };
+
+
+        area.appendChild(item);
+
+    });
 
 }
 
 
-/* =========================
-GIFT
-========================= */
+/* ===============================
+   SPARK EFFECT
+================================ */
 
-let giftOpened=false;
+function createSpark(x,y){
 
-function openGift(){
+    for(let i=0;i<12;i++){
 
-  if(giftOpened) return;
+        const spark =
+        document.createElement("div");
 
-  giftOpened=true;
 
-  const gift =
-    document.getElementById("gift");
+        spark.textContent="✨";
 
-  gift.classList.add("open");
 
-  createTinyHearts(15);
+        spark.style.position="fixed";
 
-  setTimeout(()=>{
+        spark.style.left=x+"px";
 
-    document.getElementById("giftNext")
-      .style.display="inline-block";
+        spark.style.top=y+"px";
 
-  },1100);
+        spark.style.fontSize="18px";
+
+        spark.style.zIndex="99";
+
+        spark.style.pointerEvents="none";
+
+
+        document.body.appendChild(spark);
+
+
+        const angle=
+        Math.random()*Math.PI*2;
+
+
+        const distance=
+        40+Math.random()*70;
+
+
+        spark.animate([
+
+            {
+
+                transform:
+                "translate(0,0) scale(1)",
+
+                opacity:1
+
+            },
+
+            {
+
+                transform:
+
+                `translate(
+                ${Math.cos(angle)*distance}px,
+                ${Math.sin(angle)*distance}px
+                ) scale(0)`,
+
+                opacity:0
+
+            }
+
+        ],{
+
+            duration:700,
+
+            easing:"ease-out"
+
+        });
+
+
+        setTimeout(()=>{
+
+            spark.remove();
+
+        },700);
+
+    }
 
 }
 
 
-/* =========================
-MIRROR
-========================= */
+/* ===============================
+   SECRET MESSAGES
+================================ */
 
-let mirrorOpened=false;
+const messages=[
 
-function revealMirror(){
+"تذكري: مو كل شعور لازم نلقى له سبب حتى نحس بيه.",
 
-  if(mirrorOpened) return;
+"إذا يومج مو حلو، هذا ما يعني إن كل الأيام راح تكون نفس الشي.",
 
-  mirrorOpened=true;
+"أحيانًا أحسن إنجاز نسويه هو إننا نكمل يومنا وبس.",
 
-  const mirror =
-    document.getElementById("mirror");
+"لا تضغطين على نفسج حتى تكونين بخير بسرعة... خذي وقتج.",
 
-  mirror.classList.add("reveal");
-
-  createTinyHearts(8);
-
-  setTimeout(()=>{
-
-    document.getElementById("mirrorNext")
-      .style.display="inline-block";
-
-  },1000);
-
-}
-
-
-/* =========================
-FLOWERS
-========================= */
-
-const flowerMessages=[
-
-"هاي الوردة تكول لج: لا تنسين إن الأشياء الحلوة تستحق وقت حتى تتفتح 🌷",
-
-"رسالتها: خلي جزء من يومج دائمًا إله علاقة بشيء يفرحج 🎀",
-
-"هاي اختارت تكول لج: مو كل شيء لازم يكون كامل حتى يكون جميل 🤍",
-
-"وأخيرًا: يمكن أحلى صفة بالشخص هي إنه يبقى نفسه بدون تصنع 🌸"
+"وبالمناسبة، الابتسامة إذا رجعت ولو شويّة فهذا يعتبر نجاح رسمي للمهمة ✨"
 
 ];
 
-let flowerPicked=false;
 
-function pickFlower(number){
+let messageIndex=0;
 
-  const message =
-    document.getElementById("flowerMessage");
 
-  message.innerHTML =
-    flowerMessages[number];
+function showRandomMessage(){
 
-  message.style.animation="none";
+    const box =
+    document.getElementById("messageBox");
 
-  void message.offsetWidth;
 
-  message.style.animation=
-    "pageIn .5s forwards";
+    box.style.opacity="0";
 
-  flowerPicked=true;
-
-  createTinyHearts(6);
-
-  document.getElementById("flowerNext")
-    .style.display="inline-block";
-
-}
-
-
-/* =========================
-DRAWERS
-========================= */
-
-function openDrawer(element){
-
-  element.classList.toggle("open");
-
-  createTinyHearts(3);
-
-}
-
-
-/* =========================
-POLAROIDS
-========================= */
-
-let photoClicked=false;
-
-function showPhotoMessage(text){
-
-  const message =
-    document.getElementById("photoMessage");
-
-  message.innerHTML=text;
-
-  message.classList.add("show");
-
-  photoClicked=true;
-
-  document.getElementById("photoNext")
-    .style.display="inline-block";
-
-  createTinyHearts(5);
-
-}
-
-
-/* =========================
-WISH
-========================= */
-
-let wished=false;
-
-function makeWish(){
-
-  if(wished) return;
-
-  wished=true;
-
-  const result =
-    document.getElementById("wishResult");
-
-  result.innerHTML=`
-  خليها بقلبج... 🤍<br>
-  وأتمنى يوم من الأيام تتذكرين إنج بهاللحظة تمنيتِ شي،
-  وتبتسمين لأن الأمنية تحققت.
-  `;
-
-  createTinyHearts(25);
-
-  document.getElementById("wishNext")
-    .style.display="inline-block";
-
-}
-
-
-/* =========================
-FINAL BOX
-========================= */
-
-let finalOpened=false;
-
-function openFinal(){
-
-  if(finalOpened) return;
-
-  finalOpened=true;
-
-  const box =
-    document.getElementById("finalBox");
-
-  box.classList.add("open");
-
-  createTinyHearts(40);
-
-  setTimeout(()=>{
-
-    document.getElementById("finalMessage")
-      .classList.add("show");
-
-    progress.style.width="100%";
-
-  },1000);
-
-}
-
-
-/* =========================
-HEART PARTICLES
-========================= */
-
-function createTinyHearts(number){
-
-  const container =
-    document.getElementById("hearts");
-
-  const icons=[
-    "🤍","🎀","🌸","♡","✨"
-  ];
-
-  for(let i=0;i<number;i++){
-
-    const heart =
-      document.createElement("div");
-
-    heart.className="heart";
-
-    heart.innerHTML=
-      icons[Math.floor(Math.random()*icons.length)];
-
-    heart.style.left=
-      Math.random()*100+"%";
-
-    heart.style.fontSize=
-      (14+Math.random()*15)+"px";
-
-    heart.style.setProperty(
-      "--time",
-      (3+Math.random()*3)+"s"
-    );
-
-    heart.style.animationDelay=
-      Math.random()*0.5+"s";
-
-    container.appendChild(heart);
 
     setTimeout(()=>{
-      heart.remove();
-    },6000);
 
-  }
+
+        box.textContent=
+        messages[messageIndex];
+
+
+        box.style.opacity="1";
+
+
+        messageIndex++;
+
+
+        if(
+        messageIndex>=messages.length
+        ){
+
+            document
+            .getElementById("messageButton")
+            .style.display="none";
+
+
+            document
+            .getElementById("continueMessages")
+            .style.display="inline-block";
+
+        }
+
+    },250);
 
 }
 
 
-/* =========================
-INITIAL
-========================= */
+/* ===============================
+   ENVELOPE
+================================ */
 
-updateProgress();
+let envelopeOpened=false;
+
+
+function openEnvelope(){
+
+    if(envelopeOpened) return;
+
+
+    envelopeOpened=true;
+
+
+    const envelope =
+    document.getElementById("envelope");
+
+
+    const hint =
+    document.getElementById("envelopeHint");
+
+
+    const nextButton =
+    document.getElementById("afterEnvelope");
+
+
+    /* فتح الظرف */
+
+    envelope.classList.add("open");
+
+
+    /* تغيير النص */
+
+    hint.style.opacity="0";
+
+
+    setTimeout(()=>{
+
+        hint.innerHTML=
+
+        "اقريها براحتج...<br>هاي الرسالة إلج 🤍";
+
+
+        hint.style.opacity="1";
+
+
+    },800);
+
+
+    /* زر المتابعة */
+
+    setTimeout(()=>{
+
+
+        nextButton.style.display=
+        "inline-block";
+
+
+        nextButton.animate([
+
+            {
+
+                opacity:0,
+
+                transform:
+                "translateY(15px)"
+
+            },
+
+            {
+
+                opacity:1,
+
+                transform:
+                "translateY(0)"
+
+            }
+
+        ],{
+
+            duration:700,
+
+            fill:"forwards"
+
+        });
+
+
+    },1800);
+
+}
+
+
+/* ===============================
+   CELEBRATION
+================================ */
+
+function celebrate(){
+
+
+    sky.style.background=
+
+    `radial-gradient(
+    circle at 50% 30%,
+    #ffb7d4,
+    #8d75e8 45%,
+    #30205b
+    )`;
+
+
+    /* Confetti */
+
+    for(let i=0;i<140;i++){
+
+        setTimeout(
+
+        createConfetti,
+
+        i*18
+
+        );
+
+    }
+
+
+    /* Balloons */
+
+    for(let i=0;i<20;i++){
+
+        setTimeout(
+
+        createBalloon,
+
+        i*180
+
+        );
+
+    }
+
+
+    /* الانتقال */
+
+    setTimeout(()=>{
+
+        nextPage();
+
+    },3500);
+
+}
+
+
+/* ===============================
+   CREATE CONFETTI
+================================ */
+
+function createConfetti(){
+
+
+    const c =
+    document.createElement("div");
+
+
+    c.className="confetti";
+
+
+    const colors=[
+
+        "#ff7eb6",
+        "#ffd166",
+        "#9bf6ff",
+        "#caffbf",
+        "#d9a7ff",
+        "#ffffff"
+
+    ];
+
+
+    c.style.background=
+
+    colors[
+    Math.floor(
+    Math.random()*colors.length
+    )
+    ];
+
+
+    c.style.left=
+
+    Math.random()*100+"vw";
+
+
+    c.style.animationDuration=
+
+    (2+Math.random()*3)+"s";
+
+
+    document
+    .getElementById("celebration")
+    .appendChild(c);
+
+
+    setTimeout(()=>{
+
+        c.remove();
+
+    },5000);
+
+}
+
+
+/* ===============================
+   CREATE BALLOONS
+================================ */
+
+function createBalloon(){
+
+
+    const balloon =
+    document.createElement("div");
+
+
+    balloon.className="balloon";
+
+
+    const colors=[
+
+        "#ff6fae",
+        "#8f7cff",
+        "#ffd166",
+        "#7de2d1",
+        "#ff9f68"
+
+    ];
+
+
+    balloon.style.background=
+
+    colors[
+    Math.floor(
+    Math.random()*colors.length
+    )
+    ];
+
+
+    balloon.style.left=
+
+    Math.random()*100+"%";
+
+
+    balloon.style.animationDuration=
+
+    (6+Math.random()*4)+"s";
+
+
+    document
+    .getElementById("celebration")
+    .appendChild(balloon);
+
+
+    setTimeout(()=>{
+
+        balloon.remove();
+
+    },10000);
+
+}
 
 </script>
 
